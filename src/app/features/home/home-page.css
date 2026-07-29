@@ -1,0 +1,66 @@
+:host {
+  display: block;
+}
+
+.hero-stroke path {
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation: draw-line 900ms 180ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.preview-stage::before {
+  position: absolute;
+  inset: 1rem -0.75rem -1rem 1rem;
+  z-index: -1;
+  border: 1px solid rgb(170 242 220 / 0.13);
+  border-radius: 1.9rem;
+  background: rgb(170 242 220 / 0.035);
+  content: '';
+  transform: rotate(-1.3deg);
+}
+
+.preview-stage::after {
+  position: absolute;
+  inset: 12% 4% -10%;
+  z-index: -2;
+  border-radius: 50%;
+  background: rgb(119 221 189 / 0.09);
+  content: '';
+  filter: blur(4rem);
+}
+
+.preview-shell {
+  box-shadow: 0 2.5rem 6rem -2.5rem rgb(0 0 0 / 0.88);
+  transition:
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 500ms ease;
+}
+
+.preview-loop path {
+  stroke-dasharray: 3 12;
+  animation: move-thread 18s linear infinite;
+}
+
+@media (min-width: 64rem) {
+  .preview-shell {
+    transform: rotate(0.8deg);
+  }
+
+  .preview-stage:hover .preview-shell,
+  .preview-stage:focus-within .preview-shell {
+    box-shadow: 0 3rem 7rem -2.5rem rgb(0 0 0 / 0.92);
+    transform: translateY(-0.25rem) rotate(0deg);
+  }
+}
+
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes move-thread {
+  to {
+    stroke-dashoffset: -120;
+  }
+}

@@ -1,0 +1,488 @@
+<div class="relative isolate overflow-hidden">
+  <section
+    class="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-24 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16 lg:pb-24 lg:pt-28"
+    aria-labelledby="hero-title"
+  >
+    <div class="relative z-10 min-w-0">
+      <p class="text-sm text-stone-400">A tiny wishlist, saved locally.</p>
+
+      <h1
+        id="hero-title"
+        class="text-balance mt-5 max-w-[11ch] text-5xl font-semibold leading-[0.96] tracking-[-0.055em] text-paper-100 sm:text-6xl lg:text-7xl"
+      >
+        Keep the things
+        <span class="relative inline-block text-wish-300">
+          you want.
+          <svg
+            viewBox="0 0 250 18"
+            class="hero-stroke pointer-events-none absolute -bottom-2 left-0 h-4 w-full overflow-visible"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M4 10.5C57 4.5 130 4 246 9"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+          </svg>
+        </span>
+      </h1>
+
+      <p class="text-pretty mt-7 max-w-lg text-lg leading-8 text-stone-300">
+        Save a product, its price, and a note for later. You don't need an account. The list stays
+        on this device.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <a
+          href="#preview"
+          class="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-wish-300 px-5 py-3 text-sm font-semibold text-ink-950 outline-none transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-paper-100 focus-visible:ring-2 focus-visible:ring-wish-300 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"
+          (click)="focusPreview()"
+        >
+          Try the live demo
+          <svg viewBox="0 0 20 20" class="size-4" fill="none" aria-hidden="true" focusable="false">
+            <path
+              d="M4 10h12m-4.5-4.5L16 10l-4.5 4.5"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+        <a
+          routerLink="/details"
+          class="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-md px-1 text-sm font-medium text-stone-300 underline decoration-stone-700 underline-offset-4 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-wish-300 sm:justify-start"
+        >
+          How it was built
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <section
+      #previewRegion
+      id="preview"
+      tabindex="-1"
+      class="preview-stage relative min-w-0 scroll-mt-24 outline-none"
+      aria-labelledby="preview-title"
+    >
+      <h2 id="preview-title" class="sr-only">Interactive Wishlist demo</h2>
+      <svg
+        viewBox="0 0 520 520"
+        class="preview-loop pointer-events-none absolute -right-20 -top-24 -z-20 hidden size-[34rem] text-wish-300/[0.15] lg:block"
+        fill="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M90 330C-8 160 88 42 236 80c145 37 238 201 164 318-68 108-254 77-292-20-29-75 43-146 139-119 83 24 91 128 22 158"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+      </svg>
+
+      <div class="preview-shell relative z-10 rounded-[1.75rem] bg-paper-100 p-2">
+        <span
+          class="absolute -right-2 -top-3 z-20 inline-flex items-center gap-1.5 rounded-full bg-peach-300 px-3 py-1.5 text-[0.68rem] font-semibold text-ink-950 shadow-lg shadow-black/20"
+        >
+          <span class="size-1.5 rounded-full bg-ink-950" aria-hidden="true"></span>
+          live demo
+        </span>
+
+        <div
+          class="min-w-0 overflow-hidden rounded-[1.3rem] border border-stone-300 bg-white shadow-sm"
+        >
+          <div class="flex items-center justify-between border-b border-stone-200 px-4 py-3.5">
+            <div>
+              <p class="text-[0.65rem] font-medium uppercase tracking-[0.14em] text-stone-500">
+                Your space
+              </p>
+              <p class="mt-0.5 text-base font-semibold tracking-tight text-stone-950">Wishlist</p>
+            </div>
+            <span
+              class="grid size-10 place-items-center rounded-full bg-stone-950 text-white"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 20 20" class="size-4" fill="none">
+                <path
+                  d="M10 4v12M4 10h12"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </span>
+          </div>
+
+          <div
+            class="grid grid-cols-2 border-b border-stone-200 bg-stone-50 p-1.5"
+            role="group"
+            aria-label="Choose a preview list"
+          >
+            <button
+              #wishlistToggle
+              type="button"
+              class="min-h-11 rounded-lg px-3 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1"
+              [class.bg-white]="previewScreen() === 'wishlist'"
+              [class.text-stone-950]="previewScreen() === 'wishlist'"
+              [class.shadow-sm]="previewScreen() === 'wishlist'"
+              [class.text-stone-600]="previewScreen() !== 'wishlist'"
+              [attr.aria-pressed]="previewScreen() === 'wishlist'"
+              aria-controls="preview-wish-list"
+              (click)="selectPreviewScreen('wishlist')"
+            >
+              Wishlist
+              <span
+                class="ml-1 rounded-full bg-stone-200 px-1.5 py-0.5 text-[0.65rem] text-stone-700"
+              >
+                {{ openWishes().length }}
+              </span>
+            </button>
+            <button
+              #doneToggle
+              type="button"
+              class="min-h-11 rounded-lg px-3 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1"
+              [class.bg-white]="previewScreen() === 'done'"
+              [class.text-stone-950]="previewScreen() === 'done'"
+              [class.shadow-sm]="previewScreen() === 'done'"
+              [class.text-stone-600]="previewScreen() !== 'done'"
+              [attr.aria-pressed]="previewScreen() === 'done'"
+              aria-controls="preview-wish-list"
+              (click)="selectPreviewScreen('done')"
+            >
+              Done
+              <span
+                class="ml-1 rounded-full bg-stone-200 px-1.5 py-0.5 text-[0.65rem] text-stone-700"
+              >
+                {{ completedWishes().length }}
+              </span>
+            </button>
+          </div>
+
+          <div class="min-h-[19rem] bg-[#f7f5ef] px-3 py-3 sm:min-h-[21rem]">
+            <div class="mb-2 flex items-center justify-between px-1">
+              <p class="text-[0.65rem] font-medium uppercase tracking-[0.14em] text-stone-600">
+                {{ visibleListLabel() }}
+              </p>
+              <button
+                type="button"
+                class="min-h-11 rounded-lg px-2 text-xs font-medium text-stone-600 outline-none transition-colors hover:text-stone-950 focus-visible:ring-2 focus-visible:ring-stone-900"
+                (click)="resetPreview()"
+              >
+                Reset
+              </button>
+            </div>
+
+            <ul id="preview-wish-list" class="grid gap-2">
+              @for (wish of visibleWishes(); track wish.id) {
+                <li
+                  class="flex min-h-[4.7rem] items-center gap-3 rounded-xl border border-stone-200 bg-white p-3 shadow-sm shadow-stone-900/[0.04]"
+                >
+                  <button
+                    type="button"
+                    class="grid size-11 shrink-0 place-items-center rounded-xl border outline-none transition-[background-color,border-color,transform] hover:scale-105 focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+                    [class.border-stone-300]="!wish.completed"
+                    [class.border-stone-950]="wish.completed"
+                    [class.bg-stone-950]="wish.completed"
+                    [class.text-white]="wish.completed"
+                    [attr.aria-label]="
+                      wish.completed
+                        ? 'Move ' + wish.title + ' back to the wishlist'
+                        : 'Mark ' + wish.title + ' as done'
+                    "
+                    [attr.aria-pressed]="wish.completed"
+                    (click)="toggleWish(wish.id)"
+                  >
+                    @if (wish.completed) {
+                      <svg
+                        viewBox="0 0 20 20"
+                        class="size-4"
+                        fill="none"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path
+                          d="m4.5 10 3.2 3.2 7.8-7.8"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    } @else {
+                      <span
+                        class="size-2 rounded-full"
+                        [class.bg-emerald-500]="wish.priority === 'low'"
+                        [class.bg-amber-400]="wish.priority === 'medium'"
+                        [class.bg-rose-500]="wish.priority === 'high'"
+                        aria-hidden="true"
+                      ></span>
+                    }
+                  </button>
+
+                  <div
+                    class="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2"
+                  >
+                    <p
+                      class="truncate text-sm font-semibold"
+                      [class.line-through]="wish.completed"
+                      [class.text-stone-900]="!wish.completed"
+                      [class.text-stone-600]="wish.completed"
+                    >
+                      {{ wish.title }}
+                    </p>
+                    <p
+                      class="text-sm font-semibold"
+                      [class.text-stone-900]="!wish.completed"
+                      [class.text-stone-600]="wish.completed"
+                    >
+                      {{ displayPrice(wish.price) }}
+                    </p>
+                    <p class="col-span-2 mt-1 truncate text-xs text-stone-500">
+                      {{ wish.note }}
+                    </p>
+                  </div>
+                  <span class="sr-only">Priority: {{ wish.priority }}</span>
+                </li>
+              } @empty {
+                <li
+                  class="grid min-h-56 place-items-center rounded-xl border border-dashed border-stone-300 bg-white/70 px-6 text-center"
+                >
+                  <div>
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="mx-auto size-8 text-stone-400"
+                      fill="none"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        d="M7.5 4.5h9A1.5 1.5 0 0 1 18 6v13.25L12 16l-6 3.25V6a1.5 1.5 0 0 1 1.5-1.5Z"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    <p class="mt-3 text-sm font-medium text-stone-800">Nothing here right now.</p>
+                    <p class="mt-1 text-xs leading-5 text-stone-500">
+                      Move something here from the other list.
+                    </p>
+                  </div>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div
+            class="flex items-center gap-2 border-t border-stone-200 bg-white px-4 py-3 text-xs text-stone-500"
+          >
+            <span class="size-1.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
+            Mark something done, then open Done.
+          </div>
+        </div>
+      </div>
+
+      <p class="sr-only" aria-live="polite">
+        {{ previewAnnouncement() }}
+      </p>
+    </section>
+  </section>
+
+  <section class="border-y border-white/[0.07]" aria-label="Project origin">
+    <div
+      class="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 md:flex-row md:items-center md:justify-between"
+    >
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <a
+          [href]="siteLinks.tumo"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-11 w-fit items-center rounded-md outline-none transition-opacity hover:opacity-75 focus-visible:ring-2 focus-visible:ring-wish-300 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"
+          aria-label="Visit the TUMO Center for Creative Technologies website"
+        >
+          <img
+            ngSrc="tumo-logo-white.png"
+            width="239"
+            height="80"
+            class="h-auto w-[8.5rem]"
+            alt="TUMO Center for Creative Technologies"
+          />
+        </a>
+        <p class="max-w-xl text-sm leading-6 text-stone-400">
+          Wishlist was built at TUMO as an educational project. It is not an official TUMO service.
+        </p>
+      </div>
+      <a
+        [href]="siteLinks.tumo"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex min-h-11 w-fit items-center gap-1.5 rounded-md px-1 text-sm text-stone-300 underline decoration-stone-700 underline-offset-4 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-wish-300"
+      >
+        About TUMO
+        <span aria-hidden="true">↗</span>
+        <span class="sr-only">(opens in a new tab)</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-28" aria-labelledby="features-title">
+    <div class="grid gap-6 sm:grid-cols-[0.75fr_1.25fr] sm:gap-14">
+      <p class="text-sm text-stone-400">What it does</p>
+      <div>
+        <h2
+          id="features-title"
+          class="text-balance text-3xl font-semibold tracking-[-0.035em] text-paper-100 sm:text-5xl"
+        >
+          What you can do with a wish.
+        </h2>
+        <p class="text-pretty mt-4 max-w-2xl text-base leading-7 text-stone-400 sm:text-lg">
+          A title is enough to start. Add the rest when it helps.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+      <article class="grid gap-3 py-7 sm:grid-cols-[3rem_12rem_1fr] sm:items-baseline sm:gap-6">
+        <span class="font-mono text-xs text-wish-300">01</span>
+        <h3 class="text-lg font-medium text-paper-100">Add the details</h3>
+        <p class="max-w-2xl text-sm leading-7 text-stone-400">
+          Keep a price, product link, note, local image reference, and low, medium, or high
+          priority.
+        </p>
+      </article>
+      <article class="grid gap-3 py-7 sm:grid-cols-[3rem_12rem_1fr] sm:items-baseline sm:gap-6">
+        <span class="font-mono text-xs text-wish-300">02</span>
+        <h3 class="text-lg font-medium text-paper-100">Spot repeated links</h3>
+        <p class="max-w-2xl text-sm leading-7 text-stone-400">
+          If the link is already saved, Wishlist names the matching item and asks before adding
+          another.
+        </p>
+      </article>
+      <article class="grid gap-3 py-7 sm:grid-cols-[3rem_12rem_1fr] sm:items-baseline sm:gap-6">
+        <span class="font-mono text-xs text-wish-300">03</span>
+        <h3 class="text-lg font-medium text-paper-100">Move it to Done</h3>
+        <p class="max-w-2xl text-sm leading-7 text-stone-400">
+          Check off a wish, restore it later, or delete it when you no longer need the record.
+        </p>
+      </article>
+    </div>
+
+    <dl class="grid border-b border-white/[0.08] sm:grid-cols-3 sm:divide-x sm:divide-white/[0.08]">
+      <div class="border-b border-white/[0.08] py-5 sm:border-b-0 sm:pr-6">
+        <dt class="text-xs text-stone-400">Targets</dt>
+        <dd class="mt-1.5 text-sm text-stone-200">Android · iOS · Web</dd>
+      </div>
+      <div class="border-b border-white/[0.08] py-5 sm:border-b-0 sm:px-6">
+        <dt class="text-xs text-stone-400">Currency symbols</dt>
+        <dd class="mt-1.5 text-sm text-stone-200">USD · RUB · AMD · EUR</dd>
+      </div>
+      <div class="py-5 sm:pl-6">
+        <dt class="text-xs text-stone-400">Themes</dt>
+        <dd class="mt-1.5 text-sm text-stone-200">Light · Dark · System</dd>
+      </div>
+    </dl>
+    <p class="mt-4 text-xs leading-5 text-stone-400">
+      These are source targets. This site does not claim app store availability.
+    </p>
+  </section>
+
+  <section class="border-y border-white/[0.07] bg-white/[0.012]" aria-labelledby="local-title">
+    <div
+      class="mx-auto grid max-w-5xl gap-14 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1fr_0.85fr] lg:gap-20"
+    >
+      <div>
+        <p class="text-sm text-stone-400">Local storage</p>
+        <h2
+          id="local-title"
+          class="text-balance mt-4 text-3xl font-semibold tracking-[-0.035em] text-paper-100 sm:text-5xl"
+        >
+          Your list stays on this device.
+        </h2>
+        <p class="text-pretty mt-5 text-lg leading-8 text-stone-300">
+          Wishlist stores your wishes and settings in the app or browser. There is no account,
+          analytics service, backend, or cloud sync.
+        </p>
+
+        <div
+          class="mt-9 flex flex-col gap-3 text-sm text-stone-300 sm:flex-row sm:items-center sm:gap-4"
+          role="group"
+          aria-label="Data moves from you through Wishlist to local storage on this device"
+        >
+          <span>You</span>
+          <span class="text-wish-300" aria-hidden="true">→</span>
+          <span>Wishlist</span>
+          <span class="text-wish-300" aria-hidden="true">→</span>
+          <span>This device</span>
+        </div>
+
+        <div class="mt-9 border-l border-amber-300/60 pl-5">
+          <h3 class="text-sm font-medium text-amber-100">A note about local storage</h3>
+          <p class="mt-2 max-w-xl text-sm leading-6 text-amber-100/70">
+            The data is not encrypted or backed up. Clearing the app or site data removes it, and it
+            will not follow you to another device.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <dl class="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+          <div class="grid grid-cols-[7rem_1fr] gap-5 py-5">
+            <dt class="text-sm text-stone-400">Wishes</dt>
+            <dd class="text-sm leading-6 text-stone-300">One list for open and completed items</dd>
+          </div>
+          <div class="grid grid-cols-[7rem_1fr] gap-5 py-5">
+            <dt class="text-sm text-stone-400">Currency</dt>
+            <dd class="text-sm leading-6 text-stone-300">The symbol changes, not the amount</dd>
+          </div>
+          <div class="grid grid-cols-[7rem_1fr] gap-5 py-5">
+            <dt class="text-sm text-stone-400">Theme</dt>
+            <dd class="text-sm leading-6 text-stone-300">Light, dark, or the device setting</dd>
+          </div>
+        </dl>
+        <p class="mt-6 text-xs leading-5 text-stone-400">
+          Picked images are saved as local URI references. They appear in the editor, not on the
+          wishlist cards.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-24" aria-labelledby="cta-title">
+    <div class="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <h2
+          id="cta-title"
+          class="text-3xl font-semibold tracking-[-0.035em] text-paper-100 sm:text-4xl"
+        >
+          Want the code?
+        </h2>
+        <p class="mt-3 max-w-xl text-base leading-7 text-stone-400">
+          The build notes cover the routes, storage keys, data shape, and choices behind the app.
+        </p>
+      </div>
+      <div class="flex shrink-0 flex-col gap-3 sm:items-end">
+        <a
+          routerLink="/details"
+          class="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium text-paper-100 underline decoration-wish-300/60 underline-offset-4 outline-none transition-colors hover:text-wish-300 focus-visible:ring-2 focus-visible:ring-wish-300"
+        >
+          Read the build notes
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          [href]="siteLinks.repository"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-11 items-center gap-1.5 rounded-md text-sm text-stone-400 outline-none transition-colors hover:text-stone-200 focus-visible:ring-2 focus-visible:ring-wish-300"
+        >
+          View the source
+          <span aria-hidden="true">↗</span>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

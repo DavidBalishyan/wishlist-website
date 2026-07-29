@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.details-glow {
+  background: radial-gradient(
+    circle,
+    rgb(119 221 189 / 14%) 0%,
+    rgb(119 221 189 / 5%) 38%,
+    transparent 72%
+  );
+  filter: blur(54px);
+}
+
+.implementation-summary {
+  position: relative;
+}
+
+.implementation-summary::before {
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline-start: 50%;
+  width: min(42%, 18rem);
+  height: 1px;
+  content: '';
+  background: linear-gradient(90deg, transparent, rgb(170 242 220 / 70%), transparent);
+  transform: translateX(-50%);
+}
+
+.architecture-frame {
+  box-shadow: 0 28px 90px -55px rgb(119 221 189 / 40%);
+}
+
+.timeline-list {
+  padding-inline-start: 1.5rem;
+  border-inline-start: 1px solid rgb(255 255 255 / 10%);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-step {
+  position: relative;
+}
+
+.timeline-step::before {
+  position: absolute;
+  inset-block-start: 0.4rem;
+  inset-inline-start: -1.78rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  content: '';
+  background: #aaf2dc;
+  border: 2px solid #131311;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgb(170 242 220 / 10%);
+}
